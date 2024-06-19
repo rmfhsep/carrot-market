@@ -1,15 +1,19 @@
-import React from "react";
+"use client";
 
-const FormButton = ({ text, loading }: { text: string; loading: boolean }) => {
+import React from "react";
+import { useFormStatus } from "react-dom";
+
+const FormButton = ({ text }: { text: string }) => {
+  const { pending } = useFormStatus();
   return (
     <button
-      disabled={loading}
+      disabled={pending}
       className="
       primary-btn h-10 disabled:bg-neutral-400 
       disabled:text-neutral-300
       disabled:cursor-not-allowed "
     >
-      {loading ? "로딩 중" : text}
+      {pending ? "로딩 중" : text}
     </button>
   );
 };

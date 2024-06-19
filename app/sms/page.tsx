@@ -16,12 +16,14 @@ const SmsLogin = () => {
 
         <form className="flex flex-col gap-3">
           <FormInput
+            name="number"
             type="number"
             placeholder="phone number"
             required={true}
             error={[]}
           />
           <FormInput
+            name="number"
             type="number"
             placeholder="verification code"
             required={true}

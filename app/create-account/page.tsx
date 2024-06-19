@@ -16,24 +16,28 @@ const CreateAccount = () => {
 
         <form className="flex flex-col gap-3">
           <FormInput
+            name="text"
             type="text"
             placeholder="Username"
             required={true}
             error={["username is too short"]}
           />
           <FormInput
+            name="email"
             type="email"
             placeholder="email"
             required={true}
             error={[]}
           />
           <FormInput
+            name="password"
             type="password"
             placeholder="password"
             required={true}
             error={[]}
           />
           <FormInput
+            name="password"
             type="password"
             placeholder="Confirm password"
             required={true}

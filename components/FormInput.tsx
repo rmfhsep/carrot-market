@@ -5,13 +5,21 @@ interface FormInputProps {
   placeholder: string;
   required: boolean;
   error: string[];
+  name: string;
 }
 
-const FormInput = ({ type, placeholder, required, error }: FormInputProps) => {
+const FormInput = ({
+  type,
+  placeholder,
+  required,
+  error,
+  name,
+}: FormInputProps) => {
   return (
     <div>
       <div className="flex flex-col gap-2">
         <input
+          name={name}
           type={type}
           placeholder={placeholder}
           required={required}
