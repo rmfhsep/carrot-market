@@ -25,14 +25,12 @@ const Login = () => {
             type="email"
             placeholder="email"
             required={true}
-            error={[]}
           />
           <FormInput
             name="password"
             type="password"
             placeholder="password"
             required={true}
-            error={[state?.errors ?? []]}
           />
           <FormButton text="Create Button" />
         </form>

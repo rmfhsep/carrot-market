@@ -4,7 +4,7 @@ interface FormInputProps {
   type: string;
   placeholder: string;
   required: boolean;
-  error: string[];
+  error?: string[];
   name: string;
 }
 
@@ -12,7 +12,7 @@ const FormInput = ({
   type,
   placeholder,
   required,
-  error,
+  error = [],
   name,
 }: FormInputProps) => {
   return (
