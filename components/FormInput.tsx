@@ -1,9 +1,6 @@
-import React from "react";
+import React, { InputHTMLAttributes } from "react";
 
 interface FormInputProps {
-  type: string;
-  placeholder: string;
-  required: boolean;
   error?: string[];
   name: string;
 }
@@ -14,7 +11,7 @@ const FormInput = ({
   required,
   error = [],
   name,
-}: FormInputProps) => {
+}: FormInputProps & InputHTMLAttributes<HTMLInputElement>) => {
   return (
     <div>
       <div className="flex flex-col gap-2">
