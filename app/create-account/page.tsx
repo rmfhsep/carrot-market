@@ -1,10 +1,10 @@
 "use client";
 
-import FormInput from "@/components/FormInput";
+import Input from "@/components/Input";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import React from "react";
-import FormButton from "@/components/FormButton";
+import Button from "@/components/Button";
 import SocialLogin from "@/components/SocialLogin";
 import { useFormState } from "react-dom";
 import { createAccount } from "./action";
@@ -20,35 +20,39 @@ const CreateAccount = () => {
         </div>
 
         <form action={trigger} className="flex flex-col gap-3">
-          <FormInput
+          <Input
             name="username"
             type="text"
             placeholder="Username"
             required={true}
             error={state?.fieldErrors.username}
+            minLength={3}
+            maxLength={10}
           />
-          <FormInput
+          <Input
             name="email"
             type="email"
             placeholder="email"
             required={true}
             error={state?.fieldErrors.email}
           />
-          <FormInput
+          <Input
             name="password"
             type="password"
             placeholder="password"
             required={true}
+            minLength={4}
             error={state?.fieldErrors.password}
           />
-          <FormInput
+          <Input
             name="confirm_password"
             type="password"
             placeholder="Confirm password"
+            minLength={4}
             required={true}
             error={state?.fieldErrors.confirm_password}
           />
-          <FormButton text="Create Button" />
+          <Button text="Create Button" />
         </form>
       </div>
       <SocialLogin />

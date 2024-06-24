@@ -1,8 +1,8 @@
-import FormInput from "@/components/FormInput";
+import FormInput from "@/components/Input";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import React from "react";
-import FormButton from "@/components/FormButton";
+import FormButton from "@/components/Button";
 import SocialLogin from "@/components/SocialLogin";
 
 const SmsLogin = () => {
@@ -30,7 +30,7 @@ const SmsLogin = () => {
             error={[]}
           />
         </form>
-        <FormButton text="Send message" loading={false} />
+        <FormButton text="Send message" />
       </div>
     </>
   );

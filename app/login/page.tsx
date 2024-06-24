@@ -1,10 +1,10 @@
 "use client";
 
-import FormInput from "@/components/FormInput";
+import Input from "@/components/Input";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import React from "react";
-import FormButton from "@/components/FormButton";
+import Button from "@/components/Button";
 import SocialLogin from "@/components/SocialLogin";
 import { useFormState } from "react-dom";
 import { handleForm } from "./actions";
@@ -20,19 +20,19 @@ const Login = () => {
         </div>
 
         <form action={action} className="flex flex-col gap-3">
-          <FormInput
+          <Input
             name="email"
             type="email"
             placeholder="email"
             required={true}
           />
-          <FormInput
+          <Input
             name="password"
             type="password"
             placeholder="password"
             required={true}
           />
-          <FormButton text="Create Button" />
+          <Button text="Create Button" />
         </form>
       </div>
       <SocialLogin />
