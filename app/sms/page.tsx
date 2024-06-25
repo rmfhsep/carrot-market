@@ -1,11 +1,16 @@
-import FormInput from "@/components/Input";
+"use client";
+
+import Input from "@/components/Input";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import React from "react";
-import FormButton from "@/components/Button";
+import Button from "@/components/Button";
 import SocialLogin from "@/components/SocialLogin";
+import { smsLogin } from "./actions";
+import { useFormState } from "react-dom";
 
 const SmsLogin = () => {
+  const [state, dispatch] = useFormState(smsLogin, null);
   return (
     <>
       <div className="flex flex-col gap-10 py-8 px-6">
@@ -14,23 +19,23 @@ const SmsLogin = () => {
           <h2 className="text-xl">Verify your phone number</h2>
         </div>
 
-        <form className="flex flex-col gap-3">
-          <FormInput
-            name="number"
-            type="number"
+        <form action={dispatch} className="flex flex-col gap-3">
+          <Input
+            name="phone"
+            type="text"
             placeholder="phone number"
             required={true}
-            error={[]}
           />
-          <FormInput
-            name="number"
+          <Input
+            name="token"
             type="number"
             placeholder="verification code"
             required={true}
-            error={[]}
+            min={100000}
+            max={999999}
           />
+          <Button text="verify" />
         </form>
-        <FormButton text="Send message" />
       </div>
     </>
   );

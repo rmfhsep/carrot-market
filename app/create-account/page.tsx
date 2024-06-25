@@ -8,6 +8,7 @@ import Button from "@/components/Button";
 import SocialLogin from "@/components/SocialLogin";
 import { useFormState } from "react-dom";
 import { createAccount } from "./action";
+import { PASSWORD_MIN_LENGTH } from "@/lib/constants";
 
 const CreateAccount = () => {
   const [state, trigger] = useFormState(createAccount, null);
@@ -41,14 +42,14 @@ const CreateAccount = () => {
             type="password"
             placeholder="password"
             required={true}
-            minLength={4}
+            minLength={PASSWORD_MIN_LENGTH}
             error={state?.fieldErrors.password}
           />
           <Input
             name="confirm_password"
             type="password"
             placeholder="Confirm password"
-            minLength={4}
+            minLength={PASSWORD_MIN_LENGTH}
             required={true}
             error={state?.fieldErrors.confirm_password}
           />

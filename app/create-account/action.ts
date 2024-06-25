@@ -1,4 +1,9 @@
 "use server";
+import {
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_REGEX,
+  PASSWORD_REGEX_ERROR,
+} from "@/lib/constants";
 import { CgPassword } from "react-icons/cg";
 import { z } from "zod";
 
@@ -26,11 +31,8 @@ const formSchema = z
     email: z.string().email().trim().toLowerCase(),
     password: z
       .string()
-      .min(4)
-      .regex(
-        passwordRegex,
-        "A password must have lovwercase, Uppercase, a number and special chatacters."
-      ),
+      .min(PASSWORD_MIN_LENGTH)
+      .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
     confirm_password: z.string().min(4),
   })
   .refine(({ password, confirm_password }) => password === confirm_password, {

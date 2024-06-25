@@ -7,9 +7,10 @@ import React from "react";
 import Button from "@/components/Button";
 import SocialLogin from "@/components/SocialLogin";
 import { useFormState } from "react-dom";
-import { handleForm } from "./actions";
+import { login } from "./actions";
+import { PASSWORD_MIN_LENGTH } from "@/lib/constants";
 const Login = () => {
-  const [state, action] = useFormState(handleForm, null as any);
+  const [state, dispatch] = useFormState(login, null as any);
 
   return (
     <>
@@ -19,18 +20,21 @@ const Login = () => {
           <h2 className="text-xl">Login in with email and password.</h2>
         </div>
 
-        <form action={action} className="flex flex-col gap-3">
+        <form action={dispatch} className="flex flex-col gap-3">
           <Input
             name="email"
             type="email"
             placeholder="email"
             required={true}
+            error={state?.fieldErrors.email}
           />
           <Input
             name="password"
             type="password"
+            minLength={PASSWORD_MIN_LENGTH}
             placeholder="password"
             required={true}
+            error={state?.fieldErrors.password}
           />
           <Button text="Create Button" />
         </form>
