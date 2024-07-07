@@ -16,6 +16,30 @@ function checkUsername(username: string) {
   return !username.includes("potato");
 }
 
+const checkUniaueUserName = async (userName: string) => {
+  const user = await db.user.findUnique({
+    where: {
+      username: userName,
+    },
+    select: {
+      id: true,
+    },
+  });
+  return !Boolean(user);
+};
+
+const checkUniqueUseremail = async (email: string) => {
+  const userEmail = await db.user.findUnique({
+    where: {
+      email: email,
+    },
+    select: {
+      id: true,
+    },
+  });
+  return !Boolean(userEmail);
+};
+
 const formSchema = z
   .object({
     username: z
@@ -27,8 +51,14 @@ const formSchema = z
       .max(10, "that is too loooong")
       .toLowerCase()
       .trim()
-      .refine(checkUsername, "No Potato"),
-    email: z.string().email().trim().toLowerCase(),
+      .refine(checkUsername, "No Potato")
+      .refine(checkUniaueUserName, "this username already taken"),
+    email: z
+      .string()
+      .email()
+      .trim()
+      .toLowerCase()
+      .refine(checkUniqueUseremail, "already Email"),
     password: z
       .string()
       .min(PASSWORD_MIN_LENGTH)
@@ -47,37 +77,13 @@ export async function createAccount(prevState: any, formData: FormData) {
     password: formData.get("password"),
     confirm_password: formData.get("confirm_password"),
   };
-  const res = formSchema.safeParse(data);
+  const res = await formSchema.safeParseAsync(data);
   if (!res.success) {
     return res.error.flatten();
   } else {
-    const user = await db.user.findUnique({
-      where: {
-        username: res.data.username,
-      },
-      select: {
-        id: true,
-      },
-    });
-    if (user) {
-      // show error
-    }
-
-    const userEmail = await db.user.findUnique({
-      where: {
-        email: res.data.email,
-      },
-      select: {
-        id: true,
-      },
-    });
-    if (userEmail) {
-      // show error
-    }
-
     // check if username is taken
     // check if email is already used
-    // has password
+    // hash password
     // save the user to db
     // log the user in
     // redirect "/home"
