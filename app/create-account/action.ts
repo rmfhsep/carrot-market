@@ -4,6 +4,7 @@ import {
   PASSWORD_REGEX,
   PASSWORD_REGEX_ERROR,
 } from "@/lib/constants";
+import db from "@/lib/db";
 import { CgPassword } from "react-icons/cg";
 import { z } from "zod";
 
@@ -26,7 +27,6 @@ const formSchema = z
       .max(10, "that is too loooong")
       .toLowerCase()
       .trim()
-      .transform((username) => `${username} fire!!`)
       .refine(checkUsername, "No Potato"),
     email: z.string().email().trim().toLowerCase(),
     password: z
@@ -51,6 +51,35 @@ export async function createAccount(prevState: any, formData: FormData) {
   if (!res.success) {
     return res.error.flatten();
   } else {
-    console.log(res.data);
+    const user = await db.user.findUnique({
+      where: {
+        username: res.data.username,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (user) {
+      // show error
+    }
+
+    const userEmail = await db.user.findUnique({
+      where: {
+        email: res.data.email,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (userEmail) {
+      // show error
+    }
+
+    // check if username is taken
+    // check if email is already used
+    // has password
+    // save the user to db
+    // log the user in
+    // redirect "/home"
   }
 }
