@@ -7,6 +7,7 @@ import {
 import db from "@/lib/db";
 import { CgPassword } from "react-icons/cg";
 import { z } from "zod";
+import bcrypt from "bcrypt";
 
 const passwordRegex = new RegExp(
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).+$/
@@ -59,10 +60,8 @@ const formSchema = z
       .trim()
       .toLowerCase()
       .refine(checkUniqueUseremail, "already Email"),
-    password: z
-      .string()
-      .min(PASSWORD_MIN_LENGTH)
-      .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
+    password: z.string().min(PASSWORD_MIN_LENGTH),
+    // .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
     confirm_password: z.string().min(4),
   })
   .refine(({ password, confirm_password }) => password === confirm_password, {
@@ -81,6 +80,16 @@ export async function createAccount(prevState: any, formData: FormData) {
   if (!res.success) {
     return res.error.flatten();
   } else {
+    const hashedPassword = await bcrypt.hash(res.data.password, 12);
+
+    const user = await db.user.create({
+      data: {
+        username: res.data.username,
+        email: res.data.email,
+        password: hashedPassword,
+      },
+    });
+    console.log(user);
     // check if username is taken
     // check if email is already used
     // hash password
