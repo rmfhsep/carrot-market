@@ -8,6 +8,9 @@ import db from "@/lib/db";
 import { CgPassword } from "react-icons/cg";
 import { z } from "zod";
 import bcrypt from "bcrypt";
+import { getIronSession } from "iron-session";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const passwordRegex = new RegExp(
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).+$/
@@ -88,13 +91,18 @@ export async function createAccount(prevState: any, formData: FormData) {
         email: res.data.email,
         password: hashedPassword,
       },
+      select: {
+        id: true,
+      },
     });
-    console.log(user);
-    // check if username is taken
-    // check if email is already used
-    // hash password
-    // save the user to db
-    // log the user in
-    // redirect "/home"
+    const cookie = await getIronSession(cookies(), {
+      cookieName: "delicious-carrort",
+      password: process.env.COOKIE_PASSWORD!,
+    });
+    //@ts-ignore
+    cookie.id = user.id;
+    await cookie.save();
+
+    redirect("/profile");
   }
 }
