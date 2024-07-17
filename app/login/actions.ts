@@ -65,10 +65,11 @@ export async function login(prevState: any, formData: FormData) {
       result.data.password,
       user!.password ?? "xxxx"
     );
-    console.log(ok);
+
     if (ok) {
       const session = await getSession();
       session.id = user!.id;
+      await session.save();
 
       redirect("/profile");
     } else {
