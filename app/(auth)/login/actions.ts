@@ -33,7 +33,7 @@ const formSchema = z.object({
     .string()
     .email()
     .toLowerCase()
-    .refine(checkEmailExists, "An account not exsist"),
+    .refine(checkEmailExists, "An account not exist"),
   password: z
     .string({
       required_error: "password required",
@@ -51,6 +51,10 @@ export async function login(prevState: any, formData: FormData) {
   if (!result.success) {
     return result.error.flatten();
   } else {
+    //find a use with the email
+    //if the user is found, check password hash
+    // log the user in
+    // redirect "/profile
     const user = await db.user.findUnique({
       where: {
         email: result.data.email,
